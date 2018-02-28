@@ -3,20 +3,11 @@
   <head>
     <title></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script type="text/javascript" src="/socket.io/socket.io.js" >
 
-    </script>
 
   </head>
   <body>
-    <div class="list">
 
-    </div>
-
-    <h1><%=num%></h1>
-
-
-    <input type="text" name="" value="" onchange="say(event)">
 
     <%- include('header') %>
 
@@ -36,36 +27,13 @@
       <div class="box">
         <a href="/article">文章</a>
       </div>
-      <!-- <div class="box">
-        <a href="/">+</a>
-      </div> -->
+      <div class="box">
+        <a href="/chat">聊天室</a>
+      </div>
     </section>
 
 
-    <script type="text/javascript">
-      const socket = io.connect();
-      const listdom = document.querySelector(".list");
 
-      socket.emit("req","abc",function(res){
-        console.log("响应");
-      });
-
-      socket.on("newsay",word=>{
-        const pdom = document.createElement("p");
-        pdom.innerText = word;
-        listdom.appendChild(pdom);
-      })
-
-      function say(event){
-        socket.emit("say",event.target.value);
-      }
-
-      // socket.on("welcome",data=>{
-      //   console.log(data);
-      //   socket.emit("question","我想吃 ");
-      // });
-
-    </script>
 
   </body>
 </html>

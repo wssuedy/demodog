@@ -12,6 +12,7 @@ var product = require('./routes/product');
 var message = require('./routes/message');
 var article = require('./routes/article');
 var config = require('./routes/config');
+var chat = require('./routes/chat');
 
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
@@ -57,9 +58,9 @@ io.on("connection",function(socket){
     console.log(socket.handshake.session.num);
     const num = ++socket.handshake.session.num;
     socket.handshake.session.save();//socket环境下更改数据后对express下的也生效，持久化保存
-    io.emit("newsay",data +"num :"+num);
+    // io.emit("newsay",data +"num :"+num);
     // socket.emit("newsay",data+"(创建时间： "+ new Date()+ ")");
-    // io.emit("newsay",data+"(创建时间： "+ new Date()+ ")");
+    io.emit("newsay",data+"(创建时间： "+ new Date()+ ")");
   })
 
   // if(firstSocket){
@@ -102,6 +103,7 @@ app.use('/product', product);
 app.use('/message', message);
 app.use('/article', article);
 app.use('/config', config);
+app.use('/chat', chat);
 app.use("/lesson19",require("./routes/19"));
 
 // catch 404 and forward to error handler

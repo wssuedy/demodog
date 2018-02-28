@@ -10,8 +10,8 @@ router.get('/', function(req, res, next) {
 
   res.locals.user = req.session.user || "";
   console.log(req.session.user);
-  console.log("主页");
-  res.render('index');
+  console.log("chat");
+  res.render('chat');
 });
 
 
