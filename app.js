@@ -6,8 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 
-
-
 var index = require('./routes/index');
 var users = require('./routes/users');
 var product = require('./routes/product');
@@ -17,11 +15,22 @@ var config = require('./routes/config');
 
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
-const sessionMiddleware = session({
-  store:new FileStore(),
-  secret:'abcdefg',
-  cookie:{maxAge:300000}
+// const sessionMiddleware = session({
+//   store:new FileStore(),
+//   secret:'abcdefg',
+//   cookie:{maxAge:300000}
+// });
+
+var expsession = require("express-session")({
+  secret:'keyboard cat',
+  cookie:{maxAge:800000}
 });
+
+//把 express下的session放到io下 iosession用的
+var iosession = require("express-socket.io-session")(expsession);
+
+
+
 
 var app = express();
 
@@ -33,6 +42,8 @@ var io = require("socket.io")(server);
 server.listen(3000);
 //加上端口号 同时去掉最后的exports
 
+io.use(iosession);//加上 iosession
+
 // let firstSocket;
 
 io.on("connection",function(socket){
@@ -43,8 +54,12 @@ io.on("connection",function(socket){
   })
 
   socket.on("say",data=>{
+    console.log(socket.handshake.session.num);
+    const num = ++socket.handshake.session.num;
+    socket.handshake.session.save();//socket环境下更改数据后对express下的也生效，持久化保存
+    io.emit("newsay",data +"num :"+num);
     // socket.emit("newsay",data+"(创建时间： "+ new Date()+ ")");
-    io.emit("newsay",data+"(创建时间： "+ new Date()+ ")");
+    // io.emit("newsay",data+"(创建时间： "+ new Date()+ ")");
   })
 
   // if(firstSocket){
@@ -60,7 +75,11 @@ io.on("connection",function(socket){
 });
 
 
-app.use(sessionMiddleware);
+// app.use(sessionMiddleware);
+
+
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -72,6 +91,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(expsession);//为普通的express加上中间件 现在已经不依赖cookie
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
