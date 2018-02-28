@@ -14,4 +14,11 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+router.get("/ajax",function(req,res){
+  req.session.num = req.session.num || 0;
+
+  res.locals.num = ++req.session.num;
+  res.send("num = "+res.locals.num);
+})
+
 module.exports = router;
