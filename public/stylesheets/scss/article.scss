@@ -1,0 +1,19 @@
+@import "__style.scss";
+
+
+article{
+  background-color: #ffffff;
+
+}
+
+@media(max-width:500px){
+  section{
+    h2,h3{
+      display: inline-block;
+    }
+    .time{
+      display: none;
+    }
+
+  }
+}

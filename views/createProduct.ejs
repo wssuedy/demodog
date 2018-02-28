@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>产品</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+
+    <%- include('header') %>
+
+    <%- include('nav') %>
+
+   <h1>新增产品</h1>
+
+
+   <form class="" action="/product/create" method="post" enctype="multipart/form-data">
+     <input type="text" name="title" value="" placeholder="请输入产品标题">
+     <input type="text" name="price" value="" placeholder="请设置产品价格">
+     <input type="text" name="description" value="" placeholder="请输入产品描述">
+
+       <a href="#" class="afile">选择产品图片
+         <input class="selectfiles" type="file" name="picture" value="上传" multiple />
+       </a>
+
+     <input type="submit" name="" value="提交">
+   </form>
+
+   <div class="box">
+
+   </div>
+
+
+
+   <script type="text/javascript">
+     const imgaDom = document.querySelector(".afile");
+     const upDom = imgaDom.querySelector(".selectfiles");
+     // 点击事件关联
+     imgaDom.addEventListener("click",e=>upDom.click);
+
+     upDom.addEventListener("change",function(event){
+       const formdata = new FormData();//程序中的表单数据，可以往里面加数据
+       for(let file of event.target.files){
+         formdata.append("myfiles",file);
+       }
+       upload(formdata);
+     })
+
+     function upload(formdata){
+       const xhr = new XMLHttpRequest();
+       xhr.open("POST","/product/xhrup");
+       xhr.responseType = "json";//字府串，改成json格式
+       xhr.onreadystatechange = function (){
+         if(xhr.status == 200 && xhr.readyState == 4){
+           console.log("getimgurl:******"+xhr.response);
+           console.log("xhr.response type:******"+typeof(xhr.response));
+
+           for(var i =0;i<xhr.response.length;i++){
+             console.log(xhr.response[i].filename);
+             const imgurl = "/product/img/"+xhr.response[i].filename;
+             addImage(imgurl);
+           }
+         }
+       }
+       xhr.send(formdata);
+     }
+
+     // 单个图片上传
+
+     // upDom.addEventListener("change",function(event){
+     //   const formdata = new FormData();//程序中的表单数据，可以往里面加数据
+     //   // for(let file of event.target.files){
+     //   //   formdata.append("myfiles",file);
+     //   //   upload(formdata);
+     //   // }
+     //   formdata.append("myfile",event.target.files[0]);
+     //   upload(formdata);
+     // })
+     // upDom.addEventListener("change",function(event){
+     //   const formdata = new FormData();//程序中的表单数据，可以往里面加数据
+     //   // for(let file of event.target.files){
+     //   //   formdata.append("myfiles",file);
+     //   //   upload(formdata);
+     //   // }
+     //   formdata.append("myfile",event.target.files[0]);
+     //   upload(formdata);
+     // })
+     //
+     // function upload(formdata){
+     //   const xhr = new XMLHttpRequest();
+     //   xhr.open("POST","/product/xhrup");
+     //   xhr.responseType = "json";//字府串，改成json格式
+     //   xhr.onreadystatechange = function (){
+     //     if(xhr.status == 200 && xhr.readyState == 4){
+     //       console.log("getimgurl:******"+xhr.response);
+     //       const imgurl = "/product/img/"+xhr.response.filename;
+     //
+     //       addImage(imgurl);
+     //     }
+     //   }
+     //   xhr.send(formdata);
+     // }
+
+     function addImage(url){
+       const img = new Image();
+       img.src = url;
+       img.width = "100";
+       img.height = "100";
+       document.querySelector(".box").appendChild(img);
+     }
+
+
+
+
+
+
+
+   </script>
+
+
+
+
+
+  </body>
+</html>

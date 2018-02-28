@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>产品</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+
+    <%- include('header') %>
+
+    <%- include('nav') %>
+
+    <a href="/product">回到产品列表</a>
+
+    <a href="/product/create">新增产品</a>
+
+   <h1>产品</h1>
+
+     <h3><%=product.title%>  </h3>
+     <%product.picture.forEach(p=>{%>
+       <img width="400" height="400" src= "/product/img/<%=p%>" >
+     <%})%>
+
+     <p style="color:red">价格：<%=product.price%></p>
+     <p>描述：<%=product.description%></p>
+     <hr>
+  </body>
+</html>

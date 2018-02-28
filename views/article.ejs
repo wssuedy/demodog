@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/css/article.css' />
+  </head>
+  <body>
+
+    <%- include('header') %>
+
+    <%- include('nav') %>
+
+    <hr>
+    <a href="/article/create">创建新文章</a>
+    <a href="/article/my">只看我的</a>
+    <a href="/article">所有文章</a>
+
+    <h1>文章列表</h1>
+    <p><a href="/article/datenew">日期由近到远</a> <a href="/article/dateold">日期由远到近</a> </p>
+
+    <section>
+      <% list.forEach(doc=>{%>
+        <article class="">
+          <h2><a href="/article/<%=doc.id%>/read"><%=doc.title%></a> </h2>
+          <h3 placeholder="只看<%=doc.author%>"><a href="/article/<%=doc.author%>/author" ><%=doc.author||"游客"%></a> </h3>
+          <p class="time"><a href="/article/<%=doc.id%>/edit">编辑</a> <a href="/article/<%=doc.id%>/delete">删除</a>
+            创建时间： <%=doc.createTime%> | 更新时间： <%=doc.updateTime%></p>
+
+            <p style="padding-bottom:10px">
+            <a href="/article/<%=doc.id%>/love">（<%=doc.loveNum || 0%>）喜欢 </a>
+            <span> （<%=doc.accessNum%>）阅读 </span>
+          </p>
+        </article>
+
+      <%})%>
+    </section>
+
+    <script type="text/javascript" src="/javascripts/hidnav.js">
+    </script>
+
+
+
+
+
+
+  </body>
+</html>

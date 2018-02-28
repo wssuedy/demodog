@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>产品</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+
+    <%- include('header') %>
+
+    <%- include('nav') %>
+
+   <h1>产品</h1>
+
+   <%list.forEach(product=>{%>
+     <h3><%=product.title%></h3>
+     <img src="/product/product" alt="">
+     <p><%=product.price%></p>
+     <p><%=product.description%></p>
+
+   <%})%>
+
+
+
+  </body>
+</html>

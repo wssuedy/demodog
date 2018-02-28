@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/socket.io/socket.io.js" >
+
+    </script>
+
+  </head>
+  <body>
+    <div class="list">
+
+    </div>
+
+    <input type="text" name="" value="" onchange="say(event)">
+
+    <%- include('header') %>
+
+
+    <hr>
+
+    <h1>我的主页</h1>
+
+    <section style="margin-top:100px;margin-left:100px">
+
+      <div class="box">
+        <a href="/product">产品</a>
+      </div>
+      <div class="box">
+        <a href="/message">留言</a>
+      </div>
+      <div class="box">
+        <a href="/article">文章</a>
+      </div>
+      <!-- <div class="box">
+        <a href="/">+</a>
+      </div> -->
+    </section>
+
+
+    <script type="text/javascript">
+      const socket = io.connect();
+      const listdom = document.querySelector(".list");
+
+      socket.emit("req","abc",function(res){
+        console.log("响应");
+      });
+
+      socket.on("newsay",word=>{
+        const pdom = document.createElement("p");
+        pdom.innerText = word;
+        listdom.appendChild(pdom);
+      })
+
+      function say(event){
+        socket.emit("say",event.target.value);
+      }
+
+      // socket.on("welcome",data=>{
+      //   console.log(data);
+      //   socket.emit("question","我想吃 ");
+      // });
+
+    </script>
+
+  </body>
+</html>

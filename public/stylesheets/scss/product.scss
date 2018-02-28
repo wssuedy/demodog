@@ -1,0 +1,8 @@
+@import "__style.scss";
+
+img{
+  @media(max-width:500px){
+    width:150px;
+    height:150px;
+  }
+}

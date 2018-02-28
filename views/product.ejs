@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>产品</title>
+    <link rel='stylesheet' href='/stylesheets/css/product.css' />
+  </head>
+  <body>
+
+    <%- include('header') %>
+
+    <%- include('nav') %>
+    <hr>
+    <a href="/product/create">新增产品</a>
+
+
+
+    <section>
+
+      <h1>产品</h1>
+
+
+      <%list.forEach(product=>{%>
+        <div class="porduct">
+          <h4><a href="/product/<%=product.id%>/read"><%=product.title%></a>  </h4>
+          <img width="200" height="200" src= "/product/img/<%=product.picture[0]%>" >
+
+
+          <p style="color:red">价格：<%=product.price%></p>
+          <p style="width:100px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">描述：<%=product.description%></p>
+          </div>
+
+      <%})%>
+
+    </section>
+  
+
+    <script type="text/javascript" src="/javascripts/hidnav.js">
+
+</script>
+
+
+    <!-- <script type="text/javascript">
+
+         const adom = document.querySelector("#navall");
+         const navdom = document.querySelectorAll("nav >a");
+         adom.addEventListener("click",function(event){
+           navdom.forEach(a=>a.classList.toggle("open"));
+           // navdom.classList.toggle("open");
+         })
+
+    </script> -->
+
+
+
+
+
+  </body>
+</html>
