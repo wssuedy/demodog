@@ -76,6 +76,11 @@ input{
 
 }
 
+input[type="submit"]{
+  background-color: #3c84ff;
+  color:#ffffff;
+}
+
 textarea{
   border: 1px solid #f4f4f4;
 }
@@ -104,6 +109,7 @@ textarea{
   padding:10px;
   overflow: scroll;
   border:1px solid #eee;
+  background-color: #ffffff;
 }
 
 .article >input{

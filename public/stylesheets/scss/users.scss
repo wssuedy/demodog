@@ -26,9 +26,9 @@ body{
   text-align: center;
   overflow: auto;
   border-radius: 3px;
-  position:relative;
-  top:-100px;
-  left:100px;
+  // position:relative;
+  // top:-100px;
+  // left:100px;
 
   @media(max-width:500px){
     width:300px;
@@ -68,7 +68,7 @@ body{
     animation: test 5s infinite;
     width:200px;
     height:200px;
-    position:relative;
+    position:absolute;
     top:200px;
     left:200px;
     // border:1px solid blue;

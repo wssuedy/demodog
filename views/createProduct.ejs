@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>产品</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/css/product.css' />
   </head>
   <body>
 
@@ -16,16 +16,17 @@
    <form class="" action="/product/create" method="post" enctype="multipart/form-data">
      <input type="text" name="title" value="" placeholder="请输入产品标题">
      <input type="text" name="price" value="" placeholder="请设置产品价格">
-     <input type="text" name="description" value="" placeholder="请输入产品描述">
+     <textarea name="name" rows="8" cols="80" name="description" value="" placeholder="请输入产品描述"></textarea>
+     <!-- <input type="text" name="description" value="" placeholder="请输入产品描述"> -->
 
        <a href="#" class="afile">选择产品图片
-         <input class="selectfiles" type="file" name="picture" value="上传" multiple />
+         <input class="selectfiles" type="file" name="picture" value="" multiple  />
        </a>
 
      <input type="submit" name="" value="提交">
    </form>
 
-   <div class="box">
+   <div class="pic">
 
    </div>
 
@@ -33,9 +34,9 @@
 
    <script type="text/javascript">
      const imgaDom = document.querySelector(".afile");
-     const upDom = imgaDom.querySelector(".selectfiles");
+     const upDom = document.querySelector(".selectfiles");
      // 点击事件关联
-     imgaDom.addEventListener("click",e=>upDom.click);
+     imgaDom.addEventListener("click",e=>upDom.click());
 
      upDom.addEventListener("change",function(event){
        const formdata = new FormData();//程序中的表单数据，可以往里面加数据
@@ -103,9 +104,9 @@
      function addImage(url){
        const img = new Image();
        img.src = url;
-       img.width = "100";
-       img.height = "100";
-       document.querySelector(".box").appendChild(img);
+       img.width = "300";
+       img.height = "300";
+       document.querySelector(".pic").appendChild(img);
      }
 
 
@@ -116,7 +117,9 @@
 
    </script>
 
+   <script type="text/javascript" src="/javascripts/hidnav.js">
 
+</script>
 
 
 

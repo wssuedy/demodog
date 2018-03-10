@@ -70,7 +70,7 @@ router.post('/login', async function(req, res, next) {
 router.get('/logout', function(req, res, next) {
   req.session.user = undefined;
 
-  res.redirect('back');
+  res.render('index');
 });
 
 router.get('/reg',function(req,res,next){

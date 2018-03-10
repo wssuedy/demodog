@@ -55,11 +55,18 @@ const Product = mongoose.model("Product",{
     updateTime:Date
 });
 
+const Chat = mongoose.model("Chat",{
+  name:String,
+  chat:String,
+  createTime:Date
+});
+
 module.exports.Users = Users;
 module.exports.Article = Article;
 module.exports.Messages = Messages;
 module.exports.Loves = Loves;
 module.exports.Picture = Picture;
 module.exports.Product = Product;
+module.exports.Chat = Chat;
 
 // module.exports = Users;

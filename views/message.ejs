@@ -16,8 +16,8 @@
 
       <%if(list){%>
         <%list.forEach(message=>{%>
-          <p><%=message.name%>  更新时间：<%=message.createTime%></p>
-          <p><%=message.message%></p>
+          <p style="color:gray"><%=message.name||"无名"%>    <%=message.createTime%></p>
+          <p style="padding-left:10px"><%=message.message%></p>
         <%})%>
 
       <%}%>

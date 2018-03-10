@@ -49,6 +49,10 @@ input {
   font-size: 10pt;
   padding-left: 5px; }
 
+input[type="submit"] {
+  background-color: #3c84ff;
+  color: #ffffff; }
+
 textarea {
   border: 1px solid #f4f4f4; }
 
@@ -60,7 +64,8 @@ textarea {
   min-height: 200px;
   padding: 10px;
   overflow: scroll;
-  border: 1px solid #eee; }
+  border: 1px solid #eee;
+  background-color: #ffffff; }
 
 .article > input {
   border: 1px solid #eee; }
@@ -108,10 +113,7 @@ body {
   background-color: #f4f4f4;
   text-align: center;
   overflow: auto;
-  border-radius: 3px;
-  position: relative;
-  top: -100px;
-  left: 100px; }
+  border-radius: 3px; }
   .login input {
     margin: 20px auto; }
   @media (max-width: 500px) {
@@ -139,7 +141,7 @@ body {
   animation: test 5s infinite;
   width: 200px;
   height: 200px;
-  position: relative;
+  position: absolute;
   top: 200px;
   left: 200px;
   /*transform:rotateX(10deg) rotateY(10deg);*/

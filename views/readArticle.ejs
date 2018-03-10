@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/css/article.css' />
   </head>
   <body>
 
@@ -17,27 +17,28 @@
     <a href="/article">回到文章列表</a>
 
     <a href="/article/<%=doc.id%>/edit">编辑</a> <a href="/article/<%=doc.id%>/delete">删除</a>
-    <p>创建时间： <%=doc.createTime%> | 更新时间： <%=doc.updateTime%></p>
-    <hr>
+    <p style="color:gray">创建时间： <%=doc.createTime%> | 更新时间： <%=doc.updateTime%></p>
+
     <div class="text">
       <%=doc.body%>
     </div>
 
     <%if(loveNum === 0){%>
-      <a href="/article/<%=doc.id%>/love" style="color:red">
-    <%}else{%>
       <a href="/article/<%=doc.id%>/love" style="color:gray">
+    <%}else{%>
+      <a href="/article/<%=doc.id%>/love" style="color:red">
     <%}%>
     （<%=doc.loveNum%>）喜欢 </a>
     <span> （<%=doc.accessNum%>）阅读 </span>
 
-    <p>留言</p>
+    <h4>评价</h4>
 
     <div class="messages">
       <%if(list){%>
         <%list.forEach(message=>{%>
-          <p><%=message.name%>  更新时间：<%=message.createTime%></p>
-          <p><%=message.message%></p>
+          <p style="color:gray"><%=message.name||"无名"%>  <%=message.createTime%></p>
+
+          <p style="padding-left:10px"><%=message.message%></p>
         <%})%>
 
       <%}%>
@@ -46,15 +47,15 @@
     </div>
 
 
-    <form class="" action="/article/<%=doc.id%>/message" method="post">
+    <form class="createMessage" action="/article/<%=doc.id%>/message" method="post">
       <div style="color:red" data-error="title">
 
       </div>
-      <input type="text" name="title" value="">
+      <input type="text" name="title" value="" placeholder="输入你的评价标题">
       <div style="color:red" data-error="message">
 
       </div>
-      <textarea name="message" rows="8" cols="80"></textarea>
+      <textarea name="message" rows="8" cols="80" placeholder="您对这篇文章有什么想法都可以在这里说哦"></textarea>
       <input type="submit" name="" value="提交">
 
     </form>

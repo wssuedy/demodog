@@ -22,17 +22,19 @@
       <%list.forEach(product=>{%>
         <div class="porduct">
           <h4><a href="/product/<%=product.id%>/read"><%=product.title%></a>  </h4>
-          <img width="200" height="200" src= "/product/img/<%=product.picture[0]%>" >
+          <a href="/product/<%=product.id%>/read">
+            <img width="200" height="200" src= "/product/img/<%=product.picture[0]%>" >
+          </a>
 
 
-          <p style="color:red">价格：<%=product.price%></p>
+          <p style="color:red">价格：<%=product.price%> $</p>
           <p style="width:100px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">描述：<%=product.description%></p>
           </div>
 
       <%})%>
 
     </section>
-  
+
 
     <script type="text/javascript" src="/javascripts/hidnav.js">
 

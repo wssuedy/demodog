@@ -24,10 +24,10 @@
           <h2><a href="/article/<%=doc.id%>/read"><%=doc.title%></a> </h2>
           <h3 placeholder="只看<%=doc.author%>"><a href="/article/<%=doc.author%>/author" ><%=doc.author||"游客"%></a> </h3>
           <p class="time"><a href="/article/<%=doc.id%>/edit">编辑</a> <a href="/article/<%=doc.id%>/delete">删除</a>
-            创建时间： <%=doc.createTime%> | 更新时间： <%=doc.updateTime%></p>
+            更新时间： <%=doc.updateTime%></p>
 
             <p style="padding-bottom:10px">
-            <a href="/article/<%=doc.id%>/love">（<%=doc.loveNum || 0%>）喜欢 </a>
+            <a href="/article/<%=doc.id%>/love" style="color:red">（<%=doc.loveNum || 0%>）喜欢 </a>
             <span> （<%=doc.accessNum%>）阅读 </span>
           </p>
         </article>

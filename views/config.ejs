@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    <link rel="stylesheet" href="/stylesheets/css/users.css">
   </head>
   <body>
 
@@ -22,12 +23,27 @@
         <div class="login">
 
        <h3>修改密码</h3>
+       <% if(!user){%>
+         <h3 style="color:red">请先登录</h3>
+
+         <%}%>
        <form class="" action="/config/updatepw" method="post">
          <div style="color:green;font-weight:bold" data-success>
 
          </div>
-         <input type="text" name="loginname" placeholder="请输入用户名" value="<%=user.loginname%>" disabled>
-         <div style="color:red" data-error="password">
+         <div style="color:red" data-error="nameword">
+
+         </div>
+
+         <%if(user && user.loginname && user.loginname== "admin"){%>
+           <input type="text" name="loginname" placeholder="可输入注册过的所有用户名" value="<%=user.loginname%>" %> >
+
+         <%}else{%>
+
+           <input type="text" name="loginname" placeholder="请输入登录的用户名" value="<%=user.loginname%>" %> >
+
+         <%}%>
+          <div style="color:red" data-error="password">
 
          </div>
          <input type="password" name="password" placeholder="请输入原有密码" value="">
@@ -51,10 +67,19 @@
        <a href="/users">登录</a>
      </div>
 
+     <script type="text/javascript" src="/javascripts/validateConfig.js">
+
+
+     </script>
+
 
 
      <script type="text/javascript">
+     var user = "<%=user%>";
+
+
      const form = document.querySelector("form");
+     const nameerror = form.querySelector("[data-error=nameword]");
      const pwerror = form.querySelector("[data-error=password]");
      const npwerror = form.querySelector("[data-error=newpassword]");
      const confirmerror = form.querySelector("[data-error=confirm]");
@@ -75,7 +100,15 @@
        console.log("name:"+loginname +"password:"+password);
        console.log("vimg1:"+vimg1);
 
-       const errors = validate(password,newpassword,confirm,vimg);
+         if(user && user.loginname != "admin" && user.loginname != loginname){
+           let errors = {};
+           errors.nameword = "只有admin管理员可以设置其他人密码";
+           showInfo(errors);
+         }
+
+
+
+       const errors = validateConfig(password,newpassword,confirm,vimg);
        console.log("validate:"+errors);
        if(errors){//客户端
          console.log("validate:"+errors);
@@ -83,7 +116,7 @@
          console.log("errors ");
        }else{//服务器端
          console.log("fetch ");
-         console.log(loginname,password,confirm,vimg);
+         console.log(loginname,password,newpassword,confirm,vimg);
 
          fetch("/config/updatepw",{
            method:"POST",
@@ -92,7 +125,7 @@
              "Content-Type":"application/json"
            },
 
-           body:JSON.stringify({loginname,password,confirm,vimg})
+           body:JSON.stringify({loginname,password,newpassword,confirm,vimg})
 
          }).then(res=>res.text()
          )
@@ -101,35 +134,6 @@
            showInfo(errors);
          });
        }
-     }
-
-     function validate(password,newpassword,confirm,vimg){
-
-       let errors = "";
-       if(newpassword && newpassword != confirm){
-         errors = errors || {};
-         errors.confirm = "新密码两次输入不一致";
-       }
-
-       if(!newpassword){
-         errors = errors || {};
-         errors.newpassword = "新密码为空";
-       }
-
-       if(!vimg){
-         errors = errors || {};
-         errors.vimg = "验证码为空";
-       }
-
-       if(!password){
-         errors = errors || {};
-         errors.password = "原有密码为空";
-       }else if (!(password && /\w{5,12}$/.test(password))) {
-         errors = errors || {};
-         errors.password = "原有密码格式有问题";
-       }
-
-       return errors;
      }
 
 
@@ -178,17 +182,21 @@
               if(errors.vimg){
                 vimgerror.innerText = errors.vimg;
               }
+              if(errors.nameword){
+                nameerror.innerText = errors.nameword;
+              }
+              if(errors.err){
+                alert(errors.err);
+              }
+
             }else{
               console.log("sucess");
               alert("提交成功");
-              fetch('/users',{
-                credentials: "include",
-              })
-               .then(function(response) {
-                 return response.text()
-               }).then(function(body) {
-                 document.body.innerHTML = body
-               }) ;
+
+              window.location.href="/users";
+
+
+
             }
           }
 
@@ -208,6 +216,8 @@
           //   return errors;
           // }
 
+      </script>
+      <script type="text/javascript" src="/javascripts/hidnav.js">
       </script>
 
   </body>
