@@ -43,7 +43,7 @@ router.post('/login', async function(req, res, next) {
 
   if(await query&& await query[0].password == password){
     console.log("****pw and name right***");
-    const name = loginname;
+    const name = query[0].name;
     req.session.user = {loginname,name};
     if(sum == req.session.firstnum + req.session.secondnum){
       console.log("****sum right***");

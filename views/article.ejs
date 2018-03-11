@@ -3,6 +3,7 @@
   <head>
     <title></title>
     <link rel='stylesheet' href='/stylesheets/css/article.css' />
+
   </head>
   <body>
 
@@ -10,13 +11,14 @@
 
     <%- include('nav') %>
 
-    <hr>
+
     <a href="/article/create">创建新文章</a>
     <a href="/article/my">只看我的</a>
     <a href="/article">所有文章</a>
 
     <h1>文章列表</h1>
-    <p><a href="/article/datenew">日期由近到远</a> <a href="/article/dateold">日期由远到近</a> </p>
+    <p><a href="/article/dateold/<%=currpage%>">日期由近到远</a>
+      <a href="/article/datenew/<%=currpage%>">日期由远到近</a> </p>
 
     <section>
       <% list.forEach(doc=>{%>
@@ -34,6 +36,22 @@
 
       <%})%>
     </section>
+
+    <div class="page">
+      <ul class="pagination">
+        <span>合计<%=count%>篇 </span>
+        <li><a href="/article/page/<%=currpage-1>0? currpage-1 : 1%>">«</a> </li>
+        <%for(var i=1;i<=count/pageper +1;i++){%>
+          <%if(i==currpage){%>
+            <li><a href="/article/page/<%=i%>" class="active"><%=i%></a></li>
+          <%}else{%>
+            <li><a href="/article/page/<%=i%>"><%=i%></a></li>
+          <%}%>
+        <%}%>
+
+        <li><a href="/article/page/<%=+currpage+1<Math.floor(count/pageper+1)? +currpage+1 : Math.floor(count/pageper+1)%>">»</a></li>
+      </ul>
+    </div>
 
     <script type="text/javascript" src="/javascripts/hidnav.js">
     </script>

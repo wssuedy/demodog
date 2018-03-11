@@ -15,26 +15,58 @@ router.get('/', async function(req, res, next) {
   res.locals.num = 1;
   res.locals.user = req.session.user || "";
   console.log(req.session.user);
-  res.locals.list = await Article.find();
+  res.locals.list = await Article.find().limit(pageper);
+  res.locals.count = await Article.find().count();
+  res.locals.pageper = pageper;
+  res.locals.currpage = 1;
+  accessTag = 0
+  res.render('article');
+});
+
+router.get('/page/:i', async function(req, res, next) {
+  console.log("get page");
+  const newcurrpage = req.params.i;
+  console.log(newcurrpage);
+  const startnum = newcurrpage*pageper-pageper;
+  console.log(startnum);
+  res.locals.num = 1;
+  res.locals.user = req.session.user || "";
+  console.log(req.session.user);
+  res.locals.list = await Article.find().skip(startnum).limit(pageper);
+  res.locals.count = await Article.find().count();
+  res.locals.pageper = pageper;
+  res.locals.currpage = newcurrpage;
   accessTag = 0
   res.render('article');
 });
 
 /* 日期排序. */
-router.get('/dateold', async function(req, res, next) {
+router.get('/dateold/:i', async function(req, res, next) {
+  console.log("排序");
   res.locals.user = req.session.user || "";
   console.log(req.session.user);
-  res.locals.list = await Article.find().sort('-createTime');
-  accessTag = 0
+  const currpage = req.params.i;
+  const startnum = currpage*pageper-pageper;
+  res.locals.list = await Article.find().skip(startnum).limit(pageper).sort('-createTime');
+  res.locals.pageper = pageper;
+  res.locals.currpage = currpage;
+  res.locals.count = await Article.find().count();
+  accessTag = 0;
   res.render('article');
 });
 
 /* 日期排序.*/
-router.get('/datenew', async function(req, res, next) {
+router.get('/datenew/:i', async function(req, res, next) {
+  console.log("排序new");
   res.locals.user = req.session.user || "";
   console.log(req.session.user);
-  res.locals.list = await Article.find().sort('createTime');
-  accessTag = 0
+  const currpage = req.params.i;
+  const startnum = currpage*pageper-pageper;
+  res.locals.list = await Article.find().skip(startnum).limit(pageper).sort('createTime');
+  accessTag = 0;
+  res.locals.pageper = pageper;
+  res.locals.currpage = currpage;
+  res.locals.count = await Article.find().count();
   res.render('article');
 });
 // 只看我的
@@ -64,8 +96,9 @@ router.get("/:author/author",async function(req,res,next){
 });
 
 router.get("/create",function(req,res,next){
+  console.log("create article");
   res.locals.user = req.session.user || "";
-  res.render("createArticle");
+  res.render('createArticle');
 });
 
 

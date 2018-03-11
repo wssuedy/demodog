@@ -9,7 +9,7 @@
     <%- include('header') %>
 
     <%- include('nav') %>
-    <hr>
+
     <a href="/product/create">新增产品</a>
 
 
@@ -34,6 +34,22 @@
       <%})%>
 
     </section>
+
+    <div class="page">
+      <ul class="pagination">
+        <span>合计<%=count%> </span>
+        <li><a href="/product/page/<%=currpage-1>0? currpage-1 : 1%>">«</a> </li>
+        <%for(var i=1;i<=count/pageper +1;i++){%>
+          <%if(i==currpage){%>
+            <li><a href="/product/page/<%=i%>" class="active"><%=i%></a></li>
+          <%}else{%>
+            <li><a href="/product/page/<%=i%>"><%=i%></a></li>
+          <%}%>
+        <%}%>
+
+        <li><a href="/product/page/<%=+currpage+1>count/pageper+1? Math.floor(count/pageper+1) : +currpage+1%>">»</a></li>
+      </ul>
+    </div>
 
 
     <script type="text/javascript" src="/javascripts/hidnav.js">

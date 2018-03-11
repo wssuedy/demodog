@@ -14,9 +14,8 @@
 
     <%- include('nav')%>
 
-    <%- include('chatbox')%>
 
-    <!-- <div class="chat">
+    <div class="chat">
       <div class="list">
 
 
@@ -26,11 +25,11 @@
       <input type="text" name="" value="" onchange="say(event)">
 
 
-    </div> -->
+    </div>
 
 
 
-    <!-- <script type="text/javascript">
+     <script type="text/javascript">
       const socket = io.connect();
       const listdom = document.querySelector(".list");
 
@@ -47,26 +46,26 @@
         pdom.appendChild(namedom);
         pdom.appendChild(spandom);
         listdom.appendChild(pdom);
+        listdom.scrollTop = listdom.scrollHeight;
       })
 
       function say(event){
         <%if(user&&user.name){%>
           socket.emit("say",event.target.value);
+          event.target.value = "";
         <%}else {%>
           alert("请先登录");
         <%}%>
-        // socket.emit("say",event.target.value);
       }
 
-      // socket.on("welcome",data=>{
-      //   console.log(data);
-      //   socket.emit("question","我想吃 ");
-      // });
+      socket.on("welcome",data=>{
+        console.log(data);
+        socket.emit("question","我想吃 ");
+      });
 
-    </script> -->
-
-    <script type="text/javascript" src="/javascripts/chatbox.js">
     </script>
+
+
 
     <script type="text/javascript" src="/javascripts/hidnav.js">
     </script>

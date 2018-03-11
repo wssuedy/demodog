@@ -16,10 +16,26 @@ var models = require("./models");
 var Picture = models.Picture;
 var Product = models.Product;
 
+const pageper = 6;//每页显示数
+
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
   res.locals.user = req.session.user || "";
-  res.locals.list = await Product.find() ||[];
+  res.locals.list = await Product.find().limit(pageper)||[];
+  res.locals.count = await Product.find().count();
+  res.locals.pageper = pageper;
+  res.locals.currpage = 1;
+  res.render('product');
+});
+
+router.get('/page/:i', async function(req, res, next) {
+  const newcurrpage = req.params.i;
+  const startnum = newcurrpage*pageper-pageper;
+  res.locals.user = req.session.user || "";
+  res.locals.list = await Product.find().skip(startnum).limit(pageper)||[];
+  res.locals.count = await Product.find().count();
+  res.locals.pageper = pageper;
+  res.locals.currpage = newcurrpage;
   res.render('product');
 });
 
