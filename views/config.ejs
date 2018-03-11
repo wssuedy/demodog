@@ -40,7 +40,7 @@
 
          <%}else{%>
 
-           <input type="text" name="loginname" placeholder="请输入登录的用户名" value="<%=user.loginname%>" %> >
+           <input type="text" name="loginname" placeholder="请输入登录的用户名" value="<%=user.loginname%>" disabled %> >
 
          <%}%>
           <div style="color:red" data-error="password">
@@ -99,12 +99,6 @@
        var vimg1 = form.querySelector("img").value;
        console.log("name:"+loginname +"password:"+password);
        console.log("vimg1:"+vimg1);
-
-         if(user && user.loginname != "admin" && user.loginname != loginname){
-           let errors = {};
-           errors.nameword = "只有admin管理员可以设置其他人密码";
-           showInfo(errors);
-         }
 
 
 
