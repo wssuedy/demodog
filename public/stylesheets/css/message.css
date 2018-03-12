@@ -124,3 +124,9 @@ ul.pagination li a:hover:not(.active) {
 
 div.center {
   text-align: center; }
+
+.openbox {
+  display: block; }
+
+.hiddenbox, #closebutton {
+  display: none; }

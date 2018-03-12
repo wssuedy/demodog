@@ -125,10 +125,17 @@ ul.pagination li a:hover:not(.active) {
 div.center {
   text-align: center; }
 
+.openbox {
+  display: block; }
+
+.hiddenbox, #closebutton {
+  display: none; }
+
 @media (max-width: 500px) {
   img {
     width: 150px;
-    height: 150px; } }
+    height: 150px;
+    margin: 0 10px; } }
 
 form input, form textarea, form a {
   width: 100%;

@@ -9,7 +9,7 @@
     <%- include('header') %>
 
     <%- include('nav') %>
-    
+
 
     <a href="/product">回到产品列表</a>
 
@@ -23,8 +23,11 @@
      <p style="color:red">价格：<%=product.price%> $</p>
      <p>描述：<%=product.description%></p>
      <%product.picture.forEach(p=>{%>
-       <img width="300" height="300" src= "/product/img/<%=p%>" >
+       <img width="250" height="250" style="margin:0 10px" src= "/product/img/<%=p%>" >
      <%})%>
+     <p>产品发布时间：
+       <%=product.createTime.getFullYear()%>年<%=product.createTime.getMonth()+1%>月<%=product.createTime.getDate()%>日<%=product.createTime.getHours()%>时<%=product.createTime.getMinutes()%>分
+     </p>
 
 
 

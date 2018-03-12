@@ -19,6 +19,7 @@ router.get('/', async function(req, res, next) {
   res.locals.count = await Article.find().count();
   res.locals.pageper = pageper;
   res.locals.currpage = 1;
+  req.session.author = "";
   accessTag = 0
   res.render('article');
 });
@@ -29,11 +30,17 @@ router.get('/page/:i', async function(req, res, next) {
   console.log(newcurrpage);
   const startnum = newcurrpage*pageper-pageper;
   console.log(startnum);
+  const author = req.session.author;
   res.locals.num = 1;
   res.locals.user = req.session.user || "";
   console.log(req.session.user);
-  res.locals.list = await Article.find().skip(startnum).limit(pageper);
-  res.locals.count = await Article.find().count();
+  if(author!=""){
+    res.locals.list = await Article.find().skip(startnum).limit(pageper);
+    res.locals.count = await Article.find().count();
+  }else{
+    res.locals.list = await Article.find({author}).skip(startnum).limit(pageper);
+    res.locals.count = await Article.find({author}).count();
+  }
   res.locals.pageper = pageper;
   res.locals.currpage = newcurrpage;
   accessTag = 0
@@ -47,10 +54,17 @@ router.get('/dateold/:i', async function(req, res, next) {
   console.log(req.session.user);
   const currpage = req.params.i;
   const startnum = currpage*pageper-pageper;
-  res.locals.list = await Article.find().skip(startnum).limit(pageper).sort('-createTime');
+  const author = req.session.author;
+  console.log(author);
+  if(author!=""){
+    res.locals.list = await Article.find().skip(startnum).limit(pageper).sort('-createTime');
+    res.locals.count = await Article.find().count();
+  }else{
+    res.locals.list = await Article.find({author}).skip(startnum).limit(pageper).sort('-createTime');
+    res.locals.count = await Article.find({author}).count();
+  }
   res.locals.pageper = pageper;
   res.locals.currpage = currpage;
-  res.locals.count = await Article.find().count();
   accessTag = 0;
   res.render('article');
 });
@@ -62,11 +76,20 @@ router.get('/datenew/:i', async function(req, res, next) {
   console.log(req.session.user);
   const currpage = req.params.i;
   const startnum = currpage*pageper-pageper;
-  res.locals.list = await Article.find().skip(startnum).limit(pageper).sort('createTime');
+  const author = req.session.author;
+  console.log("author:"+author);
+  if(author!=""){
+    res.locals.list = await Article.find().skip(startnum).limit(pageper).sort('createTime');
+    res.locals.count = await Article.find().count();
+  }else{
+    res.locals.list = await Article.find({author}).skip(startnum).limit(pageper).sort('createTime');
+    res.locals.count = await Article.find({author}).count();
+  }
+
   accessTag = 0;
   res.locals.pageper = pageper;
   res.locals.currpage = currpage;
-  res.locals.count = await Article.find().count();
+
   res.render('article');
 });
 // 只看我的
@@ -77,7 +100,12 @@ router.get('/my', async function(req, res, next) {
   const author = req.session.user && req.session.user.loginname || "";
 
   console.log(req.session.user);
-  res.locals.list = await Article.find({author});
+  res.locals.list = await Article.find({author}).limit(pageper);
+  res.locals.count = await Article.find({author}).count();
+  req.session.author = author;
+  console.log("author:"+req.session.author);
+  res.locals.currpage = 1;
+  res.locals.pageper = pageper;
   accessTag = 0;
   res.render('article');
 });
@@ -141,7 +169,11 @@ router.get("/:id/edit",async function(req,res,next){
 
   const body = doc.body;
   const title = doc.title;
-  res.render("updateArticle",{id:req.params.id,body,title});
+  res.locals.user = req.session.user || "";
+  res.locals.id = req.params.id;
+  res.locals.title = title;
+  res.locals.body = body;
+  res.render("updateArticle");
 
 });
 
@@ -157,6 +189,7 @@ router.post("/:id/update",async function(req,res,next){
     doc.updateTime = new Date();
     await doc.save();
   }
+  r
   res.redirect("/article");
 });
 

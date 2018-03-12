@@ -28,7 +28,36 @@ router.get('/', async function(req, res, next) {
   res.render('product');
 });
 
+/* 日期排序. */
+router.get('/dateold/:i', async function(req, res, next) {
+  console.log("排序");
+  res.locals.user = req.session.user || "";
+  console.log(req.session.user);
+  const currpage = req.params.i;
+  const startnum = currpage*pageper-pageper;
+  res.locals.list = await Product.find().skip(startnum).limit(pageper).sort('-createTime');
+  res.locals.pageper = pageper;
+  res.locals.currpage = currpage;
+  res.locals.count = await Product.find().count();
+  res.render('product');
+});
+
+/* 日期排序.*/
+router.get('/datenew/:i', async function(req, res, next) {
+  console.log("排序new");
+  res.locals.user = req.session.user || "";
+  console.log(req.session.user);
+  const currpage = req.params.i;
+  const startnum = currpage*pageper-pageper;
+  res.locals.list = await Product.find().skip(startnum).limit(pageper).sort('createTime');
+  res.locals.pageper = pageper;
+  res.locals.currpage = currpage;
+  res.locals.count = await Product.find().count();
+  res.render('product');
+});
+
 router.get('/page/:i', async function(req, res, next) {
+  console.log("page");
   const newcurrpage = req.params.i;
   const startnum = newcurrpage*pageper-pageper;
   res.locals.user = req.session.user || "";
@@ -92,6 +121,16 @@ router.get('/:id/read',async function(req, res, next) {
   res.locals.product = await Product.findById(id) || "";
 
   res.render('readProduct');
+});
+
+router.get('/:id/update',async function(req, res, next) {
+  res.locals.user = req.session.user || "";
+  const id = req.params.id;
+  console.log(id);
+
+  res.locals.product = await Product.findById(id) || "";
+
+  res.render('updateProduct');
 });
 
 

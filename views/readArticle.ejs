@@ -11,13 +11,18 @@
 
     <%- include('nav') %>
 
-    
+
 
     <h3><%=doc.title%></h3>
     <a href="/article">回到文章列表</a>
 
     <a href="/article/<%=doc.id%>/edit">编辑</a> <a href="/article/<%=doc.id%>/delete">删除</a>
-    <p style="color:gray">创建时间： <%=doc.createTime%> | 更新时间： <%=doc.updateTime%></p>
+    <p style="color:gray">
+      创建时间： <%=doc.createTime.getFullYear()%>年<%=doc.createTime.getMonth()+1%>月<%=doc.createTime.getDate()%>日<%=doc.createTime.getHours()%>时<%=doc.createTime.getMinutes()%>分
+       |
+      更新时间： <%=doc.updateTime.getFullYear()%>年<%=doc.updateTime.getMonth()+1%>月<%=doc.updateTime.getDate()%>日<%=doc.updateTime.getHours()%>时<%=doc.updateTime.getMinutes()%>分
+
+    </p>
 
     <div class="text">
       <%=doc.body%>

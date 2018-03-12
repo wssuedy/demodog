@@ -11,6 +11,8 @@
 
     <%- include('nav') %>
 
+    <%- include('iframe') %>
+
 
     <a href="/article/create">创建新文章</a>
     <a href="/article/my">只看我的</a>
@@ -26,8 +28,10 @@
           <h2><a href="/article/<%=doc.id%>/read"><%=doc.title%></a> </h2>
           <h3 placeholder="只看<%=doc.author%>"><a href="/article/<%=doc.author%>/author" ><%=doc.author||"游客"%></a> </h3>
           <p class="time"><a href="/article/<%=doc.id%>/edit">编辑</a> <a href="/article/<%=doc.id%>/delete">删除</a>
-            更新时间： <%=doc.updateTime%></p>
-
+            创建时间： <%=doc.createTime.getFullYear()%>年<%=doc.createTime.getMonth()+1%>月<%=doc.createTime.getDate()%>日<%=doc.createTime.getHours()%>时<%=doc.createTime.getMinutes()%>分
+             |更新时间:
+            <%=doc.updateTime.getFullYear()%>年<%=doc.updateTime.getMonth()+1%>月<%=doc.updateTime.getDate()%>日<%=doc.updateTime.getHours()%>时<%=doc.updateTime.getMinutes()%>分
+          </p>
             <p style="padding-bottom:10px">
             <a href="/article/<%=doc.id%>/love" style="color:red">（<%=doc.loveNum || 0%>）喜欢 </a>
             <span> （<%=doc.accessNum%>）阅读 </span>
@@ -53,8 +57,8 @@
       </ul>
     </div>
 
-    <script type="text/javascript" src="/javascripts/hidnav.js">
-    </script>
+    <script type="text/javascript" src="/javascripts/hidnav.js"></script>
+    <script type="text/javascript" src="/javascripts/openbox.js"></script>
 
 
 

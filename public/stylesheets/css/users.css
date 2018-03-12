@@ -126,6 +126,12 @@ ul.pagination li a:hover:not(.active) {
 div.center {
   text-align: center; }
 
+.openbox {
+  display: block; }
+
+.hiddenbox, #closebutton {
+  display: none; }
+
 body {
   /* background: -webkit-linear-gradient(left top, red , blue); /* Safari 5.1 - 6.0 */
   /* background: -o-linear-gradient(bottom right, red, blue); /* Opera 11.1 - 12.0 */

@@ -60,7 +60,10 @@ io.on("connection",function(socket){
     socket.handshake.session.save();//socket环境下更改数据后对express下的也生效，持久化保存
     // io.emit("newsay",data +"num :"+num);
     // socket.emit("newsay",data+"(创建时间： "+ new Date()+ ")");
-    io.emit("newsay",data+"(创建时间： "+ new Date()+ ")");
+    io.emit("newsay",data+"    ( "+
+    new Date().getMonth()+1+"月"+new Date().getDate()+"日"+new Date().getHours()+":"+new Date().getMinutes()
+    + ")");
+    
   })
 
   // if(firstSocket){

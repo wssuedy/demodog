@@ -10,13 +10,15 @@
 
     <%- include('nav') %>
 
+    <%- include('iframe') %>
+
     <h1>留言板</h1>
 
     <div class="board" style="min-height:300px">
 
       <%if(list){%>
         <%list.forEach(message=>{%>
-          <p style="color:gray"><%=message.name||"无名"%>    <%=message.createTime%></p>
+          <p style="color:gray"><%=message.name||"无名"%>    <%=message.createTime.getFullYear()%>年<%=message.createTime.getMonth()+1%>月<%=message.createTime.getDate()%>日<%=message.createTime.getHours()%>时<%=message.createTime.getMinutes()%>分</p>
           <p style="padding-left:10px"><%=message.message%></p>
         <%})%>
 
@@ -40,6 +42,8 @@
         <input type="submit" name="" value="提交">
 
       </form>
+
+
 
 
       <script type="text/javascript">
@@ -111,8 +115,8 @@
 
       </script>
 
-      <script type="text/javascript" src="/javascripts/hidnav.js">
-      </script>
+      <script type="text/javascript" src="/javascripts/hidnav.js"></script>
+      <script type="text/javascript" src="/javascripts/openbox.js"></script>
 
 
 

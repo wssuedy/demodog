@@ -7,12 +7,23 @@
   </head>
   <body>
 
+    <%- include('header') %>
+
+    <%- include('nav') %>
+
+
+    <a href="/article">回到文章列表</a>
+
+    <h3>修改文章</h3>
     <form class="" action="/article/<%=id%>/update" method="post">
       <input type="text" name="title" value="<%=title%>">
       <textarea name="body" rows="8" cols="80"> <%=body%></textarea>
       <input type="submit" name="" value="修改文章">
 
     </form>
+
+    <script type="text/javascript" src="/javascripts/hidnav.js">
+    </script>
 
   </body>
 </html>
