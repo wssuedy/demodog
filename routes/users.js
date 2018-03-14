@@ -68,7 +68,7 @@ router.post('/login', async function(req, res, next) {
 });
 
 router.get('/logout', function(req, res, next) {
-  req.session.user = undefined;
+  res.locals.user = req.session.user = undefined;
 
   res.render('index');
 });
@@ -91,38 +91,50 @@ router.post('/reg',async function(req,res,next){
   // HttpSession session = request.getSession(false);
   console.log(loginname,password,confirm,vimg,req.session.vimg);
 
-  if(loginname && password === confirm && vimg && vimg == req.session.vimg){
-    console.log("okokok");
-
-
-    const name = loginname;
-    const user = new Users({
-      loginname,
-      password,
-      name,
-      createTime:new Date(),
-      updateTime:new Date()
-    });
-
-      try{
-        console.log(user);
-        await user.save();
-        console.log("reg save");
-        let errors = "";
-        console.log("/reg post errors");
-        res.send(errors);
-
-        // res.redirect("/reg");
-      }catch(err){
-        console.log("reg err");
-        res.render("/",{error:err.errors.message});
-      }
-
-  }else if (password != confirm ) {
+  const query = await Users.find().where("loginname").eq(loginname);
+  console.log(query);
+  if(query[0]){
+    console.log("用户名已存在");
     let errors = {};
-    errors.pw = "两次输入密码不一致！"
+    errors.name = "用户名已存在"
     res.send(errors);
+  }else{
+    if(loginname && password === confirm && vimg && vimg == req.session.vimg){
+      console.log("okokok");
+
+
+      const name = loginname;
+      const user = new Users({
+        loginname,
+        password,
+        name,
+        createTime:new Date(),
+        updateTime:new Date()
+      });
+
+        try{
+          console.log(user);
+          await user.save();
+          console.log("reg save");
+          let errors = "";
+          console.log("/reg post errors");
+          res.send(errors);
+
+          // res.redirect("/reg");
+        }catch(err){
+          console.log("reg err");
+          res.render("/",{error:err.errors.message});
+        }
+
+    }else if (password != confirm ) {
+      let errors = {};
+      errors.pw = "两次输入密码不一致！"
+      res.send(errors);
+    }
+
   }
+
+
 })
 
 
