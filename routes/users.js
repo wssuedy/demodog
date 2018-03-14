@@ -122,8 +122,11 @@ router.post('/reg',async function(req,res,next){
 
           // res.redirect("/reg");
         }catch(err){
-          console.log("reg err");
-          res.render("/",{error:err.errors.message});
+          // console.log("reg err");
+          // res.render("/",{error:err.errors.message});
+          let errors = {};
+          errors.name = "注册失败"
+          res.send(errors);
         }
 
     }else if (password != confirm ) {

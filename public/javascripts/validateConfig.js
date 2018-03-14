@@ -36,6 +36,6 @@ function validateConfig(password,newpassword,confirm,vimg){
 
 //
 if(typeof window == 'undefined'){
-  console.log("! window");
+  // console.log("! window");
   module.exports = validateConfig;//非window说明是nodejs环境
 }

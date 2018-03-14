@@ -4,6 +4,7 @@ var models = require("./models");
 var Article = models.Article;
 var Messages = models.Messages;
 var Loves = models.Loves;
+const validate = require("../public/javascripts/validateArticle");
 
 var accessTag = 0;
 
@@ -133,6 +134,7 @@ router.get("/create",function(req,res,next){
 // 创建文章
 router.post("/create",async function(req,res,next){
   const {title,body} = req.body;
+  console.log(title,body);
   const author = req.session.user && req.session.user.loginname || "";
   const doc = new Article({
     title,body,author,
@@ -142,14 +144,24 @@ router.post("/create",async function(req,res,next){
     loveNum:0
   });
 
-  try{
-    await doc.save();
-    res.redirect("/article/my");
-  }catch(err){
-    res.locals.user = req.session.user || "";
-    res.locals.error = err.errors.title.message;
-    res.render("createArticle");
+  var errors = validate(title,body);
+  console.log(errors);
+  if(errors){
+    res.send(errors);
+  }else{
+    try{
+      await doc.save();
+
+      res.send("");
+    }catch(err){
+      // res.locals.user = req.session.user || "";
+      // res.locals.error = err.errors.title.message;
+      let errors = {};
+      errors.err = "产品数据存储失败";
+      res.send(errors);
+    }
   }
+
 
 });
 
