@@ -16,7 +16,7 @@ router.get('/', async function(req, res, next) {
   res.locals.num = 1;
   res.locals.user = req.session.user || "";
   console.log(req.session.user);
-  res.locals.list = await Article.find().limit(pageper);
+  res.locals.list = await Article.find().limit(pageper).sort('-createTime');
   res.locals.count = await Article.find().count();
   res.locals.pageper = pageper;
   res.locals.currpage = 1;
@@ -101,7 +101,7 @@ router.get('/my', async function(req, res, next) {
   const author = req.session.user && req.session.user.loginname || "";
 
   console.log(req.session.user);
-  res.locals.list = await Article.find({author}).limit(pageper);
+  res.locals.list = await Article.find({author}).limit(pageper).sort('-createTime');
   res.locals.count = await Article.find({author}).count();
   req.session.author = author;
   console.log("author:"+req.session.author);
