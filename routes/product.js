@@ -2,6 +2,16 @@ var express = require('express');
 var router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
+var PW = require("png-word");
+var pw = new PW();
+var R = require("random-word");
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
+// app.use(require(‘multer’)({dest:__dirname + ‘/uploads’}));
+
+const validateProduct = require("../public/javascripts/validateProduct");
+
+
 const upload = multer({
   dest:"productPic",
   limits:{
@@ -21,7 +31,7 @@ const pageper = 6;//每页显示数
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
   res.locals.user = req.session.user || "";
-  res.locals.list = await Product.find().limit(pageper)||[];
+  res.locals.list = await Product.find().limit(pageper).sort('-createTime')||[];
   res.locals.count = await Product.find().count();
   res.locals.pageper = pageper;
   res.locals.currpage = 1;
@@ -70,6 +80,7 @@ router.get('/page/:i', async function(req, res, next) {
 
 router.get('/create',function(req, res, next) {
   res.locals.user = req.session.user || "";
+  res.locals.vimg = req.session.vimg;
 
   res.render('createProduct');
 });
@@ -81,35 +92,81 @@ router.post("/xhrup",arr,function(req,res){
 
 });
 
-router.post('/create',arr,async function(req,res,next){
-  const picture = await Picture.create(req.files);
-  console.log(await Picture.find());
+router.post('/create',multipartMiddleware,async function(req,res,next){
+  console.log("req.body:"+req.body);
+  // console.log("req.files:"+req.files);
+  // console.log("path:"+req.files);
+  // const files = req.files.myfiles;
+  // console.log(files);
+  // const picture = await Picture.create(files);
+
+  // const picture = await Picture.create(req.body.myfiles);
+  // console.log("picture.find():"+await Picture.find());
+
   // console.log("create product files**************");
-  console.log(await req.files);
+
 
   var pic = [];
-  for(var p of req.files){
-    pic.push(p.filename);
-  }
+
+  //
+  // for(var i in req.files){
+  //   if(req.files[i].size > 0){
+  //     var temp_path = req.files[i].path;
+  //     var target_path = './public/images/' + req.files[i].name;
+  //     fs.renameSync(temp_path, target_path);
+  //   }
+  // }
+
+
+
+
+  // var pic = [];
+  // console.log(req.body.myfiles);
+  // for(var p of req.body.myfiles){
+  //   pic.push(p.filename);
+  // }
   // console.log("picture ***"+pic+"$$$$$$$$$$$$$$$$$$$$$");
 
   // console.log("create product picture**************");
-  const {title,description,price} = req.body;
-  console.log(req.body);
+  const {title,price,description,vimg,pics} = req.body;
+  console.log("body:"+title+price+description+vimg);
+
+  // for(var p of pics){
+  //   pic.push(p.filename);
+  // }
+  console.log(pics);
+  // const picture = await Picture.create(pics);
+
+  if(req.session.vimg != vimg){
+    let errors = {};
+    errors.vimg = "验证码有误";
+    res.send(errors);
+  }
+  var errors = validateProduct(title,price,description,vimg);
+  console.log("errors"+errors);
+  if(errors){
+    res.send(errors);
+  }
+
+
 
   const product = new Product({
     title,description,price,
     createTime:new Date(),
     updateTime:new Date(),
-    picture:pic
+    picture:pics
   });
 
-  console.log(await picture);
+  try{
+    await product.save();
+    console.log("产品创建保存成功");
+    res.send("");
 
-  await product.save();
-
-  // console.log("*****"+await Product.find());
-  res.redirect('/product');
+  }catch(err){
+    let errors = {};
+    errors.err = "产品数据存储失败";
+    res.send(errors);
+  }
 });
 
 
@@ -140,9 +197,18 @@ router.get("/img/:filename",function(req,res){
   console.log("读取"+req.params);
 
   let rs = fs.createReadStream("productPic/"+req.params.filename);
+  // let rs = fs.createReadStream("./temp/"+req.params.filename);
+
 
   rs.pipe(res);
 });
+
+router.get("/vimg",function(req,res){
+
+  var r = new R("123456789");
+  req.session.vimg = r.random(3);
+  pw.createReadStream(req.session.vimg).pipe(res);
+})
 
 
 

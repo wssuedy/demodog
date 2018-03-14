@@ -14,6 +14,8 @@ var article = require('./routes/article');
 var config = require('./routes/config');
 var chat = require('./routes/chat');
 
+var multipart = require('connect-multiparty');
+
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
 // const sessionMiddleware = session({
@@ -104,6 +106,9 @@ app.use(cookieParser());
 app.use(expsession);//为普通的express加上中间件 现在已经不依赖cookie
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+// app.use(multipart({uploadDir:'./temp' }));
+// app.use(multipart({uploadDir:'./temp'}));
 
 app.use('/', index);
 app.use('/users', users);
