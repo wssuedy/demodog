@@ -32,9 +32,6 @@ var expsession = require("express-session")({
 //把 express下的session放到io下 iosession用的
 var iosession = require("express-socket.io-session")(expsession);
 
-
-
-
 var app = express();
 
 //app连上了server
