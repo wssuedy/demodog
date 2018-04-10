@@ -3,10 +3,11 @@
   <head>
     <title>产品</title>
     <link rel='stylesheet' href='/stylesheets/css/product.css' />
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
   </head>
   <body>
 
-    <%- include('header') %>
 
     <%- include('nav') %>
 
@@ -24,7 +25,7 @@
      <div class="pic">
        <%product.picture.forEach(p=>{%>
          <img width="250" height="250" src= "/product/img/<%=p%>" >
-         
+
        <%})%>
 
      </div>

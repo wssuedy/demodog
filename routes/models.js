@@ -61,6 +61,21 @@ const Chat = mongoose.model("Chat",{
   createTime:Date
 });
 
+const Album = mongoose.model("Album",{
+    name:String,
+    album: String,
+    picture:[],
+    createTime:Date,
+    updateTime:Date
+});
+
+const AlbumList = mongoose.model("AlbumList",{
+  name:String,
+  album:String,
+  createTime:Date,
+  updateTime:Date
+});
+
 module.exports.Users = Users;
 module.exports.Article = Article;
 module.exports.Messages = Messages;
@@ -68,5 +83,6 @@ module.exports.Loves = Loves;
 module.exports.Picture = Picture;
 module.exports.Product = Product;
 module.exports.Chat = Chat;
-
+module.exports.Album = Album;
+module.exports.AlbumList = AlbumList;
 // module.exports = Users;

@@ -1,9 +1,9 @@
 function validate(loginname,password){
 
   let errors = "";
-  if(!(loginname && loginname.length > 2 && loginname.length <10)){
+  if(!(loginname && loginname.length > 2 && loginname.length <20)){
     errors = errors || {};
-    errors.name = "name length >2 and <10";
+    errors.name = "用户名长度须为2-20之间";
   }
 
   if(!(password && /\w{5,12}$/.test(password))){

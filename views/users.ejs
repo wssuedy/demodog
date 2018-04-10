@@ -5,15 +5,16 @@
     <title></title>
     <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
     <link rel="stylesheet" href="/stylesheets/css/users.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script> -->
   </head>
   <body>
 
-    <%- include('header') %>
 
     <%- include('nav') %>
 
 
-        <%- include('bg') %>
+        <!-- <%- include('bg') %> -->
         <div class="login">
           <h3>登录</h3>
           <form class="" action="/users/login" method="post">
@@ -80,10 +81,9 @@
                 "Content-Type":"application/json"
               },
               body:JSON.stringify({loginname,password,sum})
-            }).then(res=>res.text()
-            )
+            }).then(res=>res.text())
             .then(errors=>{
-              // console.log("errors"+errors);
+              console.log("errors:"+errors);
               // console.log(typeof errors);
               showInfo(errors);
             });
@@ -124,8 +124,6 @@
 
         </script>
 
-        <script type="text/javascript" src="/javascripts/hidnav.js">
-        </script>
 
 
 

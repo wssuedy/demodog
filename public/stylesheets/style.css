@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  /* padding: 50px; */
   margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: #f4f4f4;
@@ -76,19 +76,20 @@ textarea{
 }
 
 .box{
-  width:200px;
-  height:200px;
-  border:10px solid;
+  width:180px;
+  height:180px;
+  border:1px solid;
   border-radius:5px;
   display:inline-block;
   margin-top: 50px;
+
   transition:transform 3s,text-shadow 3s;
-  margin:10px;
-  border-style: double;
+  margin-left:5px;
+  /* border-style: double; */
   text-align: center;
   font-size: 30pt;
-  line-height: 200px;
-  border-image:url(../images/p3.png) 10 repeat;
+  line-height: 180px;
+  /* border-image:url(../images/p3.png) 10 repeat; */
   color:gray;
 }
 

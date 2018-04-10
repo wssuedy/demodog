@@ -13,6 +13,7 @@ var message = require('./routes/message');
 var article = require('./routes/article');
 var config = require('./routes/config');
 var chat = require('./routes/chat');
+var picture = require('./routes/picture');
 
 var multipart = require('connect-multiparty');
 
@@ -97,7 +98,8 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(expsession);//为普通的express加上中间件 现在已经不依赖cookie
@@ -115,6 +117,7 @@ app.use('/article', article);
 app.use('/config', config);
 app.use('/chat', chat);
 app.use("/lesson19",require("./routes/19"));
+app.use('/picture', picture);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
