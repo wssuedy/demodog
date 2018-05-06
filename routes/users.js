@@ -23,62 +23,62 @@ router.get('/', function(req, res, next) {
 
 
 
-router.post('/login', async function(req, res, next) {
-  const {
-    loginname,
-    password,
-    sum
-  } = req.body;
-
-  // console.log("validate:::"+typeof validate);
-
-  var errors = validate(loginname, password) || "";
-  console.log("errors:" + errors);
-  if (errors) {
-    res.send(errors);
-  } else {
-    const query = await Users.find().where("loginname").eq(loginname);
-
-    console.log("query:*****" + await query);
-    console.log("password:*****" + password);
-    console.log("sum:*****" + sum + "****" + req.session.firstnum + "*****" + req.session.secondnum);
-
-
-    if (await query && await query[0].password == password) {
-      console.log("****pw and name right***");
-      const name = query[0].name;
-      req.session.user = {
-        loginname,
-        name
-      };
-      if (sum == req.session.firstnum + req.session.secondnum) {
-        console.log("****sum right***");
-        req.session.user = {
-          loginname,
-          name
-        };
-        console.log("登录成功");
-        res.send("");
-        // res.redirect('back');
-      }
-    } else if (await !query) {
-      console.log("用户名不存在");
-      let errors = {};
-      errors.name = "用户名不存在";
-      res.send(errors);
-    } else if (await query[0].password != password) {
-      console.log("密码不正确");
-      let errors = {};
-      errors.pw = "密码不正确";
-      res.send(errors);
-    }
-
-  }
-
-
-
-  // res.redirect('back');
-});
+// router.post('/login', async function(req, res, next) {
+//   const {
+//     loginname,
+//     password,
+//     sum
+//   } = req.body;
+//
+//   // console.log("validate:::"+typeof validate);
+//
+//   var errors = validate(loginname, password) || "";
+//   console.log("errors:" + errors);
+//   if (errors) {
+//     res.send(errors);
+//   } else {
+//     const query = await Users.find().where("loginname").eq(loginname);
+//
+//     console.log("query:*****" + await query);
+//     console.log("password:*****" + password);
+//     console.log("sum:*****" + sum + "****" + req.session.firstnum + "*****" + req.session.secondnum);
+//
+//
+//     if (await query && await query[0].password == password) {
+//       console.log("****pw and name right***");
+//       const name = query[0].name;
+//       req.session.user = {
+//         loginname,
+//         name
+//       };
+//       if (sum == req.session.firstnum + req.session.secondnum) {
+//         console.log("****sum right***");
+//         req.session.user = {
+//           loginname,
+//           name
+//         };
+//         console.log("登录成功");
+//         res.send("");
+//         // res.redirect('back');
+//       }
+//     } else if (await !query) {
+//       console.log("用户名不存在");
+//       let errors = {};
+//       errors.name = "用户名不存在";
+//       res.send(errors);
+//     } else if (await query[0].password != password) {
+//       console.log("密码不正确");
+//       let errors = {};
+//       errors.pw = "密码不正确";
+//       res.send(errors);
+//     }
+//
+//   }
+//
+//
+//
+//   // res.redirect('back');
+// });
 
 router.get('/logout', function(req, res, next) {
   res.locals.user = req.session.user = undefined;
