@@ -26,8 +26,10 @@ const FileStore = require('session-file-store')(session);
 // });
 
 var expsession = require("express-session")({
-  secret:'keyboard cat',
-  cookie:{maxAge:800000}
+  secret: 'keyboard cat',
+  cookie: {
+    maxAge: 800000
+  }
 });
 
 //把 express下的session放到io下 iosession用的
@@ -43,27 +45,27 @@ var io = require("socket.io")(server);
 server.listen(3000);
 //加上端口号 同时去掉最后的exports
 
-io.use(iosession);//加上 iosession
+io.use(iosession); //加上 iosession
 
 // let firstSocket;
 
-io.on("connection",function(socket){
+io.on("connection", function(socket) {
 
-  socket.on("req",function(data,cb){
+  socket.on("req", function(data, cb) {
     console.log("接受到请求");
-    cb();//表示响应的回调函数
+    cb(); //表示响应的回调函数
   })
 
-  socket.on("say",data=>{
+  socket.on("say", data => {
     console.log(socket.handshake.session.num);
     const num = ++socket.handshake.session.num;
-    socket.handshake.session.save();//socket环境下更改数据后对express下的也生效，持久化保存
+    socket.handshake.session.save(); //socket环境下更改数据后对express下的也生效，持久化保存
     // io.emit("newsay",data +"num :"+num);
     // socket.emit("newsay",data+"(创建时间： "+ new Date()+ ")");
 
-    io.emit("newsay",data+"    ( "+
-    (new Date().getMonth()+1)+"月"+new Date().getDate()+"日"+new Date().getHours()+":"+new Date().getMinutes()
-    + ")");
+    io.emit("newsay", data + "    ( " +
+      (new Date().getMonth() + 1) + "月" + new Date().getDate() + "日" + new Date().getHours() + ":" + new Date().getMinutes() +
+      ")");
 
     // io.emit("newsay",data+"    ( "+
     // new Date().getMonth()+1
@@ -99,10 +101,12 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(cookieParser());
 
-app.use(expsession);//为普通的express加上中间件 现在已经不依赖cookie
+app.use(expsession); //为普通的express加上中间件 现在已经不依赖cookie
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -116,7 +120,7 @@ app.use('/message', message);
 app.use('/article', article);
 app.use('/config', config);
 app.use('/chat', chat);
-app.use("/lesson19",require("./routes/19"));
+app.use("/lesson19", require("./routes/19"));
 app.use('/picture', picture);
 
 // catch 404 and forward to error handler
@@ -137,4 +141,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// module.exports = app;
+module.exports = app;
